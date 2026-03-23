@@ -41,7 +41,7 @@ VALUES ('Custom'),
     ('SUV'),
     ('Truck'),
     ('Sedan');
-
+    
 -- Data for table `inventory`
 INSERT INTO public.inventory (
         inv_make,
@@ -235,4 +235,17 @@ VALUES (
         'White',
         5
     );
-    
+
+-- 4 Update description for GM Hummer
+UPDATE public.inventory
+SET inv_description = REPLACE(
+        inv_description,
+        'small interiors',
+        'a huge interior'
+    )
+WHERE inv_make = 'GM'
+    AND inv_model = 'Hummer';
+-- Step 6, Update records
+UPDATE public.inventory
+SET inv_image = REPLACE(inv_image, '/images/', '/images/vehicles/'),
+    inv_thumbnail = REPLACE(inv_thumbnail, '/images/', '/images/vehicles/');

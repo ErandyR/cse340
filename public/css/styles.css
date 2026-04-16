@@ -41,6 +41,10 @@ body {
   font-size: 16px;
 }
 
+#tools a:hover {
+  background-color: #41a7d940;
+}
+
 /************ Navigation Styles *************/
 nav {
   background-color: #333;
@@ -260,7 +264,30 @@ footer .copyright {
   margin-bottom: 15px;
 }
 
+/* Tabla de inventario */
 
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 0.95rem;
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
 
 
 /************ Responsive Styles *************/

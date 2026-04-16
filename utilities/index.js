@@ -1,5 +1,7 @@
 const invModel = require("../models/inventory-model")
 const Util = {}
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ***************************
 * Constructs the nav HTML unordered list
@@ -97,6 +99,57 @@ Util.buildClassificationList = async function (classification_id = null) {
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+    if (req.cookies.jwt) {
+        jwt.verify(
+            req.cookies.jwt,
+            process.env.ACCESS_TOKEN_SECRET,
+            function (err, accountData) {
+                if (err) {
+                    req.flash("Please log in")
+                    res.clearCookie("jwt")
+                    return res.redirect("/account/login")
+                }
+                res.locals.accountData = accountData
+                res.locals.loggedin = true
+                next()
+            })
+    } else {
+        res.locals.loggedin = false
+        res.locals.accountData = null
+        return next()
+    }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+    if (res.locals.loggedin) {
+        next()
+    } else {
+        req.flash("notice", "Please log in.")
+        return res.redirect("/account/login")
+    }
+}
+
+/* ****************************************
+ *  Check Admin or employee status
+ * ************************************ */
+Util.checkAdminOrEmployee = (req, res, next) => {
+    const accountType = res.locals.accountData ? res.locals.accountData.account_type : null
+    if (accountType === "Employee" || accountType === "Admin") {
+        next()
+    } else {
+        req.flash("notice", "You must be an admin or employee to access this page.")
+        return res.redirect("/account/account-managements")
+    }
+}
 
 
 module.exports = Util

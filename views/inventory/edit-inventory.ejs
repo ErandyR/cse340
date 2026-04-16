@@ -16,9 +16,9 @@
                 </ul>
                 <% } %>
 
-                    <div class="form-container" id="addInventoryContainer">
-                        <p class="form-description">Use the form below to add a new vehicle to the inventory.</p>
-                        <form class="form" id="addVehicleForm" method="POST" action="/inv/add-inventory">
+                    <div class="form-container" id="editInventoryContainer">
+                        <p class="form-description">Use the form below to edit the vehicle details.</p>
+                        <form class="form" id="editVehicleForm" method="POST" action="/inv/edit/">
                             <div class="form-group">
                                 <label for="classification">Classification:</label>
                                 <%- classificationList %>
@@ -67,6 +67,9 @@
                                 <input type="text" id="invColor" name="inv_color" required
                                     value="<%= locals.inv_color %>">
                             </div>
-                            <button type="submit" class="btn-primary">Add Vehicle</button>
+                            <button type="submit" name="submit" class="btn-primary" disabled>Edit Vehicle</button>
+                            <input type="hidden" name="inv_id" <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+                                <% } %>>
                         </form>
                     </div>
+                    <script src="../../js/inv-update.js"></script>

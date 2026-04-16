@@ -69,6 +69,10 @@ Util.buildInventoryDetail = async function (data) {
     detail += '<p>Price: $' + new Intl.NumberFormat('en-US').format(data.inv_price) + '</p>'
     detail += '<p>Miles: ' + new Intl.NumberFormat('en-US').format(data.inv_miles) + '</p>'
     detail += '<p>Description: ' + data.inv_description + '</p>'
+    detail += '<form action="/account/garage/add" method="POST">'
+    detail += '<input type="hidden" name="inv_id" value="' + data.inv_id + '">'
+    detail += '<button type="submit" class="add-btn">Add to My Garage</button>'
+    detail += '</form>'
     detail += '</div>'
     detail += '</div>'
     return detail

@@ -4,6 +4,7 @@ const router = new express.Router();
 const utilities = require("../utilities/");
 const acctController = require("../controllers/accountController");
 const regValidate = require('../utilities/account-validation')
+const garageController = require("../controllers/garageController")
 
 //Route for my account view
 router.get("/login", utilities.handleErrors(acctController.buildLogin));
@@ -64,6 +65,20 @@ router.get("/logout",
     utilities.handleErrors(acctController.logoutAccount)
 )
 
+// Route for viewing the user's garage
+router.get("/garage",
+    utilities.checkLogin,
+    utilities.handleErrors(garageController.viewGarage))
+
+// Route for adding a vehicle to the user's garage
+router.post("/garage/add",
+    utilities.checkLogin,
+    utilities.handleErrors(garageController.addVehicle))
+
+// Route for removing a vehicle from the user's garage
+router.post("/garage/remove",
+    utilities.checkLogin,
+    utilities.handleErrors(garageController.removeVehicle))
 
 module.exports = router;
 
